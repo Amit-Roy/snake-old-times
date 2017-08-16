@@ -7,20 +7,14 @@ function setup() {
 }
 
 function draw() {
-    if (mouseIsPressed) {
-        counter++;
-        fill(0, 255, 0);
+    counter++;
+    if (counter % 2 === 0) {
+        fill(255, 0, 0);
+    } else if (counter % 3 === 0) {
+        fill(0, 0, 255);
     }
     else {
-        counter++;
-        if (counter % 2 === 0) {
-            fill(255, 0, 0);
-        } else if (counter % 3 === 0) {
-            fill(0, 0, 255);
-        }
-        else {
-            fill(0, 255, 0);
-        }
+        fill(0, 255, 0);
     }
 
     ellipse(mouseX, mouseY, 60, 60);
