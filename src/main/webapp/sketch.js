@@ -6,6 +6,7 @@ var score = 0;
 function setup() {
     createCanvas(600, 600);
     snake = new Snake();
+    bg = loadImage("src/main/resources/grass-bg.jpg");
     frameRate(10);
     spawnFood();
     restartBtn = createButton('Restart');
@@ -41,8 +42,9 @@ function onRestart() {
 }
 
 function draw() {
-    background(0);
+    background(bg);
 
+    fill(255);
     text('Score: ' + score, width / 2, height / 2);
     textAlign(CENTER);
     textSize(25);
@@ -54,7 +56,7 @@ function draw() {
     snake.update();
     snake.show();
 
-    fill(255, 0, 100);
+    fill(70, 0, 0);
     rect(food.x, food.y, scl, scl);
 }
 
