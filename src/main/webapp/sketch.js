@@ -1,37 +1,60 @@
-var counter = 0;
+var scl = 20;
+var snake;
+var score = 0;
 
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(0);
+    createCanvas(600, 600);
+    snake = new Snake();
+    frameRate(10);
+    spawnFood();
+    button = createButton('Restart');
+    button.position(650, 200, 65);
+    button.mousePressed(reset);
+
+}
+
+function reset() {
+    snake = new Snake();
+    score = 0;
+    spawnFood();
+    redraw();
+    loop();
 }
 
 function draw() {
-    counter++;
-    counter = counter % 7;
-    switch (counter) {
-        case 0:
-            fill(255, 0, 0);
-            break;
-        case 1:
-            fill(255, 127, 0);
-            break;
-        case 2:
-            fill(255, 255, 0);
-            break;
-        case 3:
-            fill(0, 255, 0);
-            break;
-        case 4:
-            fill(0, 0, 255);
-            break;
-        case 5:
-            fill(75, 0, 130);
-            break;
-        case 6:
-            fill(139, 0, 255);
-            break;
-    }
+    background(0);
 
-    ellipse(mouseX, mouseY, 60, 60);
+    text('Score: ' + score, width / 2, height / 2);
+    textAlign(CENTER);
+    textSize(25);
+
+    if (snake.eat(food)) {
+        spawnFood();
+    }
+    snake.checkDeath();
+    snake.update();
+    snake.show();
+
+    fill(255, 0, 100);
+    rect(food.x, food.y, scl, scl);
+}
+
+function keyPressed() {
+    if (keyCode === UP_ARROW) {
+        snake.dir(0, -1);
+    } else if (keyCode === DOWN_ARROW) {
+        snake.dir(0, 1);
+    } else if (keyCode === RIGHT_ARROW) {
+        snake.dir(1, 0);
+    } else if (keyCode === LEFT_ARROW) {
+        snake.dir(-1, 0);
+    }
+}
+
+function spawnFood() {
+    var cols = floor(width / scl);
+    var rows = floor(height / scl);
+    food = createVector(floor(random(cols)), floor(random(rows)));
+    food.mult(scl);
 }
