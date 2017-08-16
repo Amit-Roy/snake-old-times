@@ -8,13 +8,31 @@ function setup() {
     snake = new Snake();
     frameRate(10);
     spawnFood();
-    button = createButton('Restart');
-    button.position(650, 200, 65);
-    button.mousePressed(reset);
-
+    restartBtn = createButton('Restart');
+    restartBtn.position(650, 200, 65);
+    restartBtn.mousePressed(onRestart);
+    onUnpause();
 }
 
-function reset() {
+function onUnpause() {
+    if (typeof unpauseBtn !== "undefined") {
+        unpauseBtn.remove();
+    }
+    pauseBtn = createButton('Pause');
+    pauseBtn.position(650, 250, 65);
+    pauseBtn.mousePressed(onPause);
+    loop();
+}
+
+function onPause() {
+    pauseBtn.remove();
+    unpauseBtn = createButton('Unpause');
+    unpauseBtn.position(650, 250, 65);
+    unpauseBtn.mousePressed(onUnpause);
+    noLoop();
+}
+
+function onRestart() {
     snake = new Snake();
     score = 0;
     spawnFood();
